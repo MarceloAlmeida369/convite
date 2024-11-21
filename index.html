@@ -1478,104 +1478,67 @@
   </script>  
 
   <!-- Modal musica inicio -->
-      
-  <script>
-    // Al cargar abro modal
-    prealoaderOption.on("load", function() {
-      $('#modalMusica').modal({
-        backdrop: 'static'
-      });
+<script>
+  // Al cargar abro modal
+  prealoaderOption.on("load", function () {
+    $('#modalMusica').modal({
+      backdrop: 'static'
     });
+  });
 
+  // Modifico el color del backdrop para este modal
+  $('#modalMusica').on('show.bs.modal', function (e) {
+    $('body').addClass("backdrop-modal-musica");
+  }).on('hide.bs.modal', function (e) {
+    $('body').removeClass("backdrop-modal-musica");
+  });
 
-    // Modifico el color del backdrop para este modal
-    $('#modalMusica').on('show.bs.modal', function(e) {
-      $('body').addClass("backdrop-modal-musica");
-    }).on('hide.bs.modal', function(e) {
-      $('body').removeClass("backdrop-modal-musica");
-    })
+  // Btn play music modal
+  $('body').on('click', '#play-music-modal', function (e) {
+    e.preventDefault();
 
-    // Btn play music modal
-    $('body').on('click', '#play-music-modal', function(e) {
+    $('#play-pause-music').attr('data-estado-music', 'play');
+    animMusicAnimIcon.play();
+    document.getElementById('background-music').play();
 
-      e.preventDefault();
+    $('#modalMusica').modal('hide');
+  });
+</script>
 
-      $('#play-pause-music').attr('data-estado-music', 'play');
+<!-- Musica de fondo -->
+<audio id="background-music" loop>
+  <source src="audio/Diga Sim pra Mim (Enamorados Version) - Dueto Enamorados.mp3" type="audio/mpeg">
+  Seu navegador não suporta o elemento de áudio.
+</audio>
+
+<script>
+  // Configurações iniciais do áudio
+  const music = document.getElementById('background-music');
+  music.volume = 0.8; // Define o volume inicial
+
+  // Controle de música play/pause
+  $('body').on('click', '#play-pause-music', function (e) {
+    e.preventDefault();
+
+    // Estado atual
+    var estadoMusic = $(this).attr('data-estado-music');
+
+    // Pause music
+    if (estadoMusic == 'pause') {
+      $(this).attr('data-estado-music', 'play');
       animMusicAnimIcon.play();
-      player.playVideo();
+      music.play();
+    }
 
-      $('#modalMusica').modal('hide');
-
-    });
-  </script>
-
-
-
-  <!-- Musica de fondo -->
-  <script>
-  // 2. This code loads the IFrame Player API code asynchronously.
-  var tag = document.createElement('script');
-
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  // 3. This function creates an <iframe> (and YouTube player)
-  //    after the API code downloads.
-  var player;
-
-  function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player-musica-fondo', {
-    height: '10',
-    width: '10',
-    playerVars: {
-      playlist: 'EH30RAXnRWs',
-      loop: 1
-    },
-    events: {
-      'onReady': onPlayerReady
+    // Play music
+    if (estadoMusic == 'play') {
+      $(this).attr('data-estado-music', 'pause');
+      music.pause();
+      animMusicAnimIcon.stop();
     }
   });
-  }
+</script>
 
-  // 4. The API will call this function when the video player is ready.
-  function onPlayerReady(event) {
-  event.target.setVolume(80);
-  // event.target.playVideo();
-  }
-
-  // Pausar video
-  function pauseVideo() {
-  player.pauseVideo();
-  }
-
-
-  // Click en controlador musica
-  $('body').on('click', '#play-pause-music', function(e) {
-
-  e.preventDefault();
-
-  // Estado actual
-  var estadoMusic = $(this).attr('data-estado-music');
-
-  // Pause music
-  if (estadoMusic == 'pause') {
-    $(this).attr('data-estado-music', 'play');
-    animMusicAnimIcon.play();
-    player.playVideo();
-
-  }
-
-  // Play music
-  if (estadoMusic == 'play') {
-    $(this).attr('data-estado-music', 'pause');
-    player.pauseVideo();
-    animMusicAnimIcon.stop();
-  }
-
-
-  });
-  </script>
 
 
 
