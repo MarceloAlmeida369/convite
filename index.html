@@ -648,7 +648,7 @@
   <div class="container">
     <div class="row text-center d-flex justify-content-center align-items-center">
 
-      <h2 class="title">Se você recebeu esse convite saiba que é alguém muito especial para nós.</h2>
+      <h6 class="title">Se você recebeu esse convite saiba que é alguém muito especial para nós.</h6>
       <p class="subtitle">Nosso casamento será um momento íntimo, repleto de amor e significado.
         Queremos compartilhar essa celebração única com pessoas que marcaram nossas vidas de forma inesquecível, e você é uma delas.</p>      
 
@@ -1163,48 +1163,49 @@
     </div>
   </div>
 </div>
-    <!-- Modal mapa-->
+    <!-- Modal mapa -->
     <div id="modalMapa" class="modal fade" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-content-2">
-
-        <picture>
-          <source type="image/webp" srcset="images/flores_Grupo04.webp">
-          <source type="image/png" srcset="images/flores_Grupo04.png">
-          <img class="adorno adorno-1" data-aos="fade-right" data-aos-delay="300" data-aos-duration="1000" data-aos-once="false" src="images/flores_Grupo04.png" alt="" loading="lazy">
-        </picture>
-
-
-
-        <div class="img-top-modal d-flex justify-content-center align-items-start">
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-content-2">
+            <picture>
+              <source type="image/webp" srcset="images/flores_Grupo04.webp">
+              <source type="image/png" srcset="images/flores_Grupo04.png">
+              <img class="adorno adorno-1" src="images/flores_Grupo04.png" alt="Adorno floral" loading="lazy">
+            </picture>
+    
+            <div class="img-top-modal d-flex justify-content-center align-items-start">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+    
+            <div class="modal-header">
+              <h5 class="modal-title">Como chegar à festa</h5>
+            </div>
+    
+            <div class="modal-body">
+              <!-- Miniatura do mapa com iframe -->
+              <iframe
+                id="googleMapIframe"
+                src=""
+                width="100%"
+                height="300px"
+                style="border: 0;"
+                allowfullscreen=""
+                loading="lazy">
+              </iframe>
+            </div>
+    
+            <div class="modal-footer">
+              <a id="ampliarMapaLink" class="boton ampliar-mapa" target="_blank" href="#">Ampliar mapa</a>
+            </div>
+          </div>
         </div>
-
-
-        <div class="modal-header">
-
-          <h5 class="modal-title"></h5>
-
-        </div>
-
-        <div class="modal-body">
-          <div id="googleMap"></div>
-        </div>
-
-        <div class="modal-footer">
-          <a class="boton ampliar-mapa" target="_blank" href="#">Ampliar mapa</a>
-        </div>
-
       </div>
-
     </div>
-  </div>
-</div>
+    
+    
     <!-- Modal cambio de idioma -->
     
       <!-- Modal -->
@@ -2171,45 +2172,42 @@
 
   <!-- Modal como llegar -->
   <script>
-    // Abrir modal
-    $('body').on('click', 'a.modal-como-llegar', function(e) {
-
+    // Função para configurar o iframe com o mapa e o link "Ampliar mapa"
+    $('body').on('click', 'a.modal-como-llegar', function (e) {
       e.preventDefault();
-
-      var evento = $(this).attr('data-evento');
-
-      if (evento == 'Fiesta') {
-        var titleModalMapa = lang_titleModalMapaFiesta;
-
-        var latitudMapa = latitudFiesta;
-        var longitudMapa = longitudFiesta;
+  
+      const evento = $(this).attr('data-evento');
+  
+      let titleModalMapa, latitudMapa, longitudMapa;
+  
+      if (evento === 'Fiesta') {
+        titleModalMapa = 'Como chegar à festa';
+        latitudMapa = latitudFiesta; // Substitua pela latitude da festa
+        longitudMapa = longitudFiesta; // Substitua pela longitude da festa
       }
-
-      if (evento == 'Ceremonia') {
-        var titleModalMapa = lang_titleModalMapaCeremonia;
-
-        var latitudMapa = latitudCeremonia;
-        var longitudMapa = longitudCeremonia;
+  
+      if (evento === 'Ceremonia') {
+        titleModalMapa = 'Como chegar à cerimônia';
+        latitudMapa = latitudCeremonia; // Substitua pela latitude da cerimônia
+        longitudMapa = longitudCeremonia; // Substitua pela longitude da cerimônia
       }
-
-      // Cambio titulo
+  
+      // Atualiza o título do modal
       $('#modalMapa .modal-title').text(titleModalMapa);
-
-      // Genero el link para ampliar mapa
-      $('.ampliar-mapa').attr('href', 'https://www.google.com/maps/search/?api=1&query=' + latitudMapa + ',' + longitudMapa);
-
-      // Cambio mapa
-      initMap(latitudMapa, longitudMapa);
-
+  
+      // Configura o iframe para exibir o mapa
+      const mapIframeUrl = `https://www.google.com/maps/embed/v1/place?q=${latitudMapa},${longitudMapa}&key=YOUR_API_KEY`;
+      $('#googleMapIframe').attr('src', `https://www.google.com/maps?q=${latitudMapa},${longitudMapa}&hl=pt&z=15&output=embed`);
+  
+      // Atualiza o link "Ampliar mapa"
+      $('#ampliarMapaLink').attr('href', `https://www.google.com/maps?q=${latitudMapa},${longitudMapa}&hl=pt`);
+  
+      // Exibe o modal
       $('#modalMapa').modal({
-        backdrop: 'static'
-      })
-
+        backdrop: 'static',
+      });
     });
   </script>
-
-
-
   <!-- Instagram parallax -->
   <script>
     // Si el ancho es de Telefono
@@ -2496,13 +2494,4 @@
 
   });
 </script>
-
-
-
-
-
-
-
-
-
 </body></html>
